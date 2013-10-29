@@ -4,6 +4,12 @@ def most_frequent_words(corpus, n):
     """Given a large string representing a text document,
     return a list of the n most frequent words in the string.
 
+    Note: here we define a word to be any sequence of characters in
+    the corpus delimited by spaces. If we wanted to exclude certain
+    sequences(for example "--", ",", etc), it would be simple to apply
+    a basic filter. However, we do let words be delimited by any number
+    of spaces.
+
     Args:
         corpus - a string
         n - an integer representing the number of most frequent words
@@ -16,11 +22,16 @@ def most_frequent_words(corpus, n):
     Raises:
         ValueError if either of the arguments are improperly formatted
     """
+
+    # handle a few edge cases:
+    if n == 0 or len(corpus) == 0:
+        raise ValueError("Incorrectly formatted arguments to most_frequent_words.")
+
     word_to_frequency = defaultdict(lambda: 0) # a dict mapping words to their frequencies
     frequency_to_words = defaultdict(set) # a dict mapping a frequency to a set of words with that frequency
     non_empty_frequencies = set() # a set of all the frequencies for which there are words with that frequency
     max_frequency = 0 # the maximum frequency of any word
-    words = corpus.strip().split(" ")
+    words = [word for word in corpus.strip().split(" ") if len(word)]
 
     # iterate through all the words in the corpus.
     # for each word, increment its frequency. remove the word
@@ -34,7 +45,7 @@ def most_frequent_words(corpus, n):
         # we want to increment it to 5. we have to remove the word from the frequency 4
         # set and add it to the frequency 5 set. additionally, if frequency 4 no longer
         # has any words, we'll remove it from the set of non empty frequencies.
-        if curr_word_frequency > 1:
+        if curr_word_frequency > 0:
             frequency_to_words[curr_word_frequency].remove(word)
             if len(frequency_to_words[curr_word_frequency]) == 0:
                 non_empty_frequencies.remove(curr_word_frequency)
@@ -62,8 +73,9 @@ def most_frequent_words(corpus, n):
     while frequency != 0 and num_printed < n:
         if frequency in non_empty_frequencies:
             words_with_this_frequency = frequency_to_words[frequency]
-            while len(words_with_this_frequency) != 0 and num_printed <= n:
-                result.append(words_with_this_frequency.pop())
+            while len(words_with_this_frequency) != 0 and num_printed < n:
+                popped = words_with_this_frequency.pop()
+                result.append(popped)
                 num_printed += 1
         frequency -= 1
     return result
