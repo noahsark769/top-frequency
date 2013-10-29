@@ -1,5 +1,6 @@
 import unittest
 from frequency import most_frequent_words
+from frequency import print_most_frequent_words
 
 class FrequencyTestCase(unittest.TestCase):
 
@@ -45,6 +46,10 @@ class FrequencyTestCase(unittest.TestCase):
 		odd_corpus = "hello hello   bees "
 		self.assertEqual(['hello'], most_frequent_words(odd_corpus, 1))
 		self.assertEqual(['hello', 'bees'], most_frequent_words(odd_corpus, 2))
+
+	def test_print_smoke(self):
+		"""Make sure the print function doesn't error."""
+		print_most_frequent_words(self.corpus, 1)
 
 if __name__ == '__main__':
 	unittest.main()
