@@ -21,6 +21,13 @@ def most_frequent_words(corpus, n):
 
     Raises:
         ValueError if either of the arguments are improperly formatted
+
+    Running time:
+        We iterate over the corpus exactly once, then iterate through a
+        range that is bounded by the maximum frequency, which is at most
+        the number of words in the corpus (which is bounded by the number
+        of characters in the corpus). Thus our asymptotic running time is
+        in O(n), where n is the number of characters in the corpus.
     """
 
     # handle a few edge cases:

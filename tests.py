@@ -47,6 +47,9 @@ class FrequencyTestCase(unittest.TestCase):
 		self.assertEqual(['hello'], most_frequent_words(odd_corpus, 1))
 		self.assertEqual(['hello', 'bees'], most_frequent_words(odd_corpus, 2))
 
+		large_similar_corpus = "bat bat bat bat bat bat bat bat bat bat bat bat bat bat bat bat bat bat bat bat"
+		self.assertEqual(['bat'], most_frequent_words(large_similar_corpus, 1))
+
 	def test_print_smoke(self):
 		"""Make sure the print function doesn't error."""
 		print_most_frequent_words(self.corpus, 1)
